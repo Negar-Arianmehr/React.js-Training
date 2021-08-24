@@ -88,4 +88,6 @@ to match the Array content again.
 The final result, therefore is correct here but from a performance perspective this is not great because all items are visited and updated and it can even lead to bugs. If the expense items would be state full items and we would have some state managed inside of that. Then if, for example, our first item, if it has a certain state if we add a new item the old first item would be overwritten with the new first item. Hence any state changes we might've had in there would be lost. So besides potential performance issues we could also run into bugs.
 **Why the React has this behaivour?**
 It is because it has no other way. We have to tell the Reat that which item is new. We do that with going to items where we have map method or any where that we can and we j=have to add special prop to this item. that is **key** prop. This is a prop that you can add to any component(Custom component or html element). With adding key prop we help React to identify the individual items. We have to set a uniq value per list item. So we have to have key prop when mapping out lists of items.
+# Conditional Content
+Conditional content is about rendering different output under different conditions. There are some ways that we can see in the code.
 
