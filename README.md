@@ -91,3 +91,13 @@ It is because it has no other way. We have to tell the Reat that which item is n
 # Conditional Content
 Conditional content is about rendering different output under different conditions. There are some ways that we can see in the code.
 
+# Styling React Components
+Building web app with React is not just about composing components together and making sure that the logic works correctly. That arguably is the most important part, where at least it is the biggestt reason for using React. But building React app is also about styling those apps. React is also about:
+1.Conditional & Dynamic Styles
+2.Styled Components
+3.CSS Modules
+
+**Setting dynamic inline styles**:
+One of them is trim(), trim method is a built in method that removes excess whitespace at the beggining or end of a string.
+We can also add new class in the special setuation with in template literal`` and ${}.
+
