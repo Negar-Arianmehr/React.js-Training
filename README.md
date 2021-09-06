@@ -100,4 +100,5 @@ Building web app with React is not just about composing components together and 
 **Setting dynamic inline styles**:
 One of them is trim(), trim method is a built in method that removes excess whitespace at the beggining or end of a string.
 We can also add new class in the special setuation with in template literal`` and ${}.
+We can use style-components for styling the html element instead of add css file to component.
 
