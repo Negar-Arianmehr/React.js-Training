@@ -134,4 +134,30 @@ clearTimeout is built into the browser, it is clean the timer that we set. If we
 
 **useReducer()** the next React Hook:
 The usereducer is another built in Hook and it is a bit like useState, but actually with more capabilities and especially useful for more complex state, for example if it got multiple states, multiple ways of changing it or dependencies to other states. So useState often becomes hard or error-prone to use and manage. it is easy to write bad, inefficient or buggy code in such scenarios. the useReducer() can be used as a replacement for useState() if we need more powerful state management.
-const [state, dispatchFn] = useReducer(reducerFn, initialState, initFn); useReducer just like useState always returns an array with exacyly two values. the state snapshot used in the component re-render/ re-evaluation cycle. because it is a state management mechanism like useState. We also get the function that can be used to dispatch a new action (i.e trigger an update of the state), that allows you to update that state snapshot. Instead of setting a new value, you will dispatch an action. and that action will be consumed by the first argument that you pass to useReducer a so-called reducer function. This is a function which gets the latest state snapshot automatically because this function will be called by React and it gets the action that was dispatched. Because React will call this reducer function whenever a new action is dispatched. Then the reducer function also sould do one important thing. It should return a new updated state. It is a bit like the fuction from of the useStaet hook, but an extended version of that. We can also add the initial state and initial function that set the initial state programmatically.
+const [state, dispatchFn] = useReducer(reducerFn, initialState, initFn); useReducer just like useState always returns an array with exacyly two values. the state snapshot used in the component re-render/ re-evaluation cycle. because it is a state management mechanism like useState. We also get the function that can be used to dispatch a new action (i.e trigger an update of the state), that allows you to update that state snapshot. Instead of setting a new value, you will dispatch an action. and that action will be consumed by the first argument that you pass to useReducer a so-called reducer function. This is a function which gets the latest state snapshot automatically because this function will be called by React and it gets the action that was dispatched. Because React will call this reducer function whenever a new action is dispatched. Then the reducer function also should do one important thing. It should return a new updated state. It is a bit like the fuction from of the useStaet hook, but an extended version of that. We can also add the initial state and initial function that set the initial state programmatically.
+Adding Nested Properties As Dependencies To useEffect
+We used object destructuring to add object properties as dependencies to useEffect().
+
+const { someProperty } = someObject;
+useEffect(() => {
+  // code that only uses someProperty ...
+}, [someProperty]);
+This is a very common pattern and approach, which is why I typically use it and why I show it here (I will keep on using it throughout the course).
+
+I just want to point out, that they key thing is NOT that we use destructuring but that we pass specific properties instead of the entire object as a dependency.
+
+We could also write this code and it would work in the same way.
+
+useEffect(() => {
+  // code that only uses someProperty ...
+}, [someObject.someProperty]);
+This works just fine as well!
+
+But you should avoid this code:
+
+useEffect(() => {
+  // code that only uses someProperty ...
+}, [someObject]);
+Why?
+
+Because now the effect function would re-run whenever ANY property of someObject changes - not just the one property (someProperty in the above example) our effect might depend on.
