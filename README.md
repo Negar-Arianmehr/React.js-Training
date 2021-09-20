@@ -178,4 +178,12 @@ We have .Provider, now we have consumer that takes a child which actually should
  
  **Building and Using a custom context Provider component** :
  Another thing that We might consider is depending on our application structure and how We are manging our data. We also might want to pull more logic out of for example App component and creat a seperate context Managment component.
-
+ Context-limitation:  It can be great for app-wide or component-wide state. So essentially states that affects multiple components. It's not a replacement for component configuration. So props for configuration, context for state management across components or possibly across the entire app. But even then we have limitations, React Context is specifically not optimized for high frequency changes. React context also should not be used to replace all component communications on props. Props are still vital and important for component configuration and short "props chains"might not need any replacement.
+ 
+ **Learning the rules of Hooks**:
+ There are two main rules we have to know when it comes to working with react hooks. React Hooks are simply all those functions that start with use:
+ 1. First rule is we must call React Hooks in React functions that means in React component functions or in Custom Hooks.
+ 2. We must to only call React Hooks at the Top level of your react component functions or your custom hook functions. Don't call Hooks in nested functions and Don't call them in the any blck statements.
+ **About useEffect Hook** there is a unofficial rule>> always add everything you refer to inside of useEffect() as a dependency.
+ 
+ 
