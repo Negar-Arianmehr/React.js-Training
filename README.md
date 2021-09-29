@@ -210,6 +210,7 @@ And that's my React has this structure of doing virtual comparisons with that vi
 is re-evaluated. For  any more child components  if they would have child components though those child components would also be re-evaluated. And, therefore, you as a developer can tell React that it should only re-execute this DemoOutput component
 under certain circumstances.  
 How can we tell React that it should behave like this?
+
 # React.memo()
 And we simply wrap our component, with React.memo. This is for functional components. So React.memo allows us to optimize functional components. Now, what does memo do?
 It tells React that for this component, which it gets as a argument, React should look at the props this component gets and check the new value for all those props and compare it to the previous value those props got. And only if the value of a prop changed, the component should be re-executed and re-evaluated. And if the parent component changed but the prop values for that component here did not change,
