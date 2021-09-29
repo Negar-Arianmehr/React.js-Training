@@ -191,4 +191,67 @@ We have .Provider, now we have consumer that takes a child which actually should
 The next hook I want to show you allows us to interact with the Input Components imperatively, which means not by parsing some state to it that then changes something in the Component, but by calling a function inside of a Component, for example, which is something you won't need to do often and you shouldn't do often because it's not the typical React pattern you want, but sometimes it is helpful. It is useRef and focus>>>we could now use inputRef.current.focus, And the focus method is a method that is available on the Input DOM object, to which you got access through this Ref. So a rare use case, but you could face it at some point.
 
 **UseImperativeHandle**: Is another Hook has a strange name, but it is  a hook that allows us to use this Component or Functionalities from inside the component imperatively. Which simply means not through the regular state props management, not by controlling the component through state in the parent Component, but instead by directly calling or manipulating something in the Component programmatically. This is something that we rarly use. we always use a alternative for it. Anyway it has two prameters, second one is a function that should return an object which inclulds all the data we can use them from outside. and the first one is that we get as an argument from Component Function. The first argument is always works with props, and second is that we use in the first argument in useImperativeHandle that is for connecting eith parent compenent. In order to enable this second argument here, we need to export our Component function in a special way. that is come from react and called **React.forwardref**. When we put it in front of the Component function still is a React Component but a React Component that is capable of being bound to a ref. With the useImperativeHandle and forwardRef, you can expose functionalities from a React Component to its parent Component to then use your Component in the parent Component through refs and trigger certain functionalities.
+
+# How React works behind the Scenes:
+React is a JS library for building user interfaces. We work with components. We see ReactDOM that is our interface to the web. React.js doesn’t know the web. It doesn’t know nothing about browse. React knows how to work with components. It is ReactDOM to which matters in the end and which ultimately needs to bring real HTML elements to the screen.
+But React is just a library that manages components, that manages state and that manages different components states and that finds out how components might need to change and which differences you might have from a previous state of a component compared to the current state. And React hands all that information regarding what changed and what should be visible on the screen no matter what screen that is.
+Therefore ReactDOM is responsible for working with the real DOM, which is part of the browser,  bringing something onto the screen, which user is then able to see.
+So React check the components and will let ReactDOM know about that to bring them to screen.
+React  uses a concept called the virtual DOM. ReactDOM receives the differences and then manipulates the real DOM.
+Re-evaluating components is not equal with Re-rendering the DOM.
+We have to differentiate between our component part (React part) and the real DOM.
+Our components are re-evaluated whenever props, state or context changes. React then executes that component function again. Now the real DOM on the other hand is only updated in the places where it needs to be changed based on that difference React derived
+between the previous state of a component and its tree and the current state after the state prop or context change. So the real DOM is not changed all the time. It's changed rarely and only when needed.
+And that's important for performance, because making a virtual comparison
+between the previous state and the current state, that's fairly cheap and easy to do.
+That happens only in memory. Reaching out to the real DOM, that's rendered in the browser
+is pretty expensive from a performance perspective, because working with the real DOM just turns out to be a performance intensive task. Of course not a tiny change in one place, but if you do that tiny change in a lot of places all the time, then your page might become slow because you're working with the real DOM too much.
+And that's my React has this structure of doing virtual comparisons with that virtual DOM and then only passing the changes between your last snapshot and the current snapshot to the real DOM. That's how React works here. For we add just a paragraph, react just add it without re-render for example header. But it is really important to understand that if a component is re-executed all its child components will also be re-executed and re-evaluated. So therefore of course not just a DemoOutput component
+is re-evaluated. For  any more child components  if they would have child components though those child components would also be re-evaluated. And, therefore, you as a developer can tell React that it should only re-execute this DemoOutput component
+under certain circumstances.  
+How can we tell React that it should behave like this?
+# React.memo()
+And we simply wrap our component, with React.memo. This is for functional components. So React.memo allows us to optimize functional components. Now, what does memo do?
+It tells React that for this component, which it gets as a argument, React should look at the props this component gets and check the new value for all those props and compare it to the previous value those props got. And only if the value of a prop changed, the component should be re-executed and re-evaluated. And if the parent component changed but the prop values for that component here did not change,
+component execution will be skipped. Why aren't we using that on all components
+if it allows us to optimize them? Because this optimization comes at a cost.
+The memo method here tells React that whenever the App component changed,
+it should go to this component here and compare the new prop values to the previous prop values, so therefore React needs to do two things.
+It needs to store the previous prop values, and it needs to make that comparison.
+And that, of course, also has its own performance cost. And it, therefore, greatly depends on the component you're applying this to whether it's worth it or not because you're trading the performance cost of re-evaluating the component for the performance cost of comparing props. And it's impossible to say which cost is higher
+because it depends on the number of props you have and on the complexity of your component and the number of child components your component has.
+Of course, React.memo can be a great tool if you have a huge component tree
+with a lot of child components. And on a high level in the component tree, you can avoid unnecessary re-render cycles for the entire branch of the component tree.
+
+# Why does React.memo() work for some case, but doesn’t work for some others case?
+you can avoid unnecessary re-render cycles for the entire branch of the component tree. Like in this case, by avoiding the re-evaluation of DemoOutput, we're also automatically avoiding the re-evaluation of MyParagraph even though we're not using React Demo in there just because we cut off this entire branch, so this entire branch of the component tree. That is something where React.memo can definitely be worth it. If you, on the other hand, have a component where you know it's going to change
+or its props values are going to change with pretty much every re-evaluation
+of the parent component anyways, then React.memo doesn't make a lot of sense
+because if the result is that the component should re-render anyways, well, then you can also save that extra comparison of the prop values.  That's then just some overhead cost, which is not worth it.  And, of course, ultimately, as always,  it depends on your app size. For small apps, for small component trees, and so on, for all of that, it might simply not worth it to add this. But for larger apps where you can cut off entire branches of unnecessary re-evaluations, it might very well be worth it.
+You just don't wanna wrap every component with React.memo. Instead, you wanna pick some key parts in your component tree which allows you to cut off an entire branch of child components. That's way more effective than doing this on every child component.
+So now that we learned about React.memo, let's also apply it to the Button. We can argue whether that's good or not because the Button is a trigger component, so doing that prop-checking might not be worth it. On the other hand, we as a developer know
+that this Button realistically doesn't re-change, so re-evaluating the Button all the time
+shouldn't be worth it.  There's nothing on it that changes, right?  We have the same text, we have the same function, so why don't we wrap it?
+For that, let's go to Button and use React.memo down here and wrap our Button component with it. Now, you will see something interesting if you do that. If you save that and reload the app, of course, initially, we see Button RUNNING. But now if we click Toggle Paragraph, we, again, see Button RUNNING.  Why is that happening? That makes no sense, right?
+Well, we see Button RUNNING again and again because, actually, its prop values did change. That's strange, right?
+If we have a look at that, it only gets one prop, onClick, or, actually, two props, the children here, but both prop values never change. We always have the same text,
+and we always have the same function, right? Well, this is one of the most common got chas with React.
+Keep in mind that this App component is just a function in the end, and it re-executes like a normal JavaScript function because it is a normal JavaScript function if your state changes. The only magic thing here is that the function's going to be called by React
+and not by you. But then, it still executes like a normal function, which means all that code executes again, and that has one important implication. Of course, this function
+which you pass to the Button is re-created. This is now a brand new function for every render or every execution cycle of the App function because in the end it's just a normal constant which we recreate. All that code in here is executed again, so, of course, a new function is created. This is not the same function all the time.
+It's a function that does the same thing. But technically to JavaScript, it's a brand new function for every time the App function is being executed.
+That's, by the way, also true for false being passed to DemoOutput.
+Previously, I said that this never changes, even that technically was not correct.
+This App function is re-executed, therefore a new false value is created.
+So even if we had false in the last render cycle too, now we have a new false.
+But if that's the case, why does React.memo then work on the DemoOutput but not on the button? What's the difference between false and the function here?
+If a new false is created and a new function is created, shouldn't then both components be re-evaluated? 
+Well, for that, you have to keep in mind that false is a boolean, and booleans like strings and numbers are primitive values in JavaScript.
+Now, what React. memo does in the end is it has a look at all the prop values, and in the end it compares props. show to props. previous. show, you could say.
+This is not exactly what it does internally, but you can imagine it like that. So in the end it has a look at the previous value for the show prop and compares it to the current value, and it does so with a regular comparison operator. Now, for primitive values, that will work because for primitive values, if I compare two booleans, I get true if they are the same. If I compare two strings, I get true if they are the same.
+Now, technically, that is a different Boolean than this here, and that's a different string than this. These are two different values But for primitive values, this comparison works. Now, that's not true if you compare arrays or objects or functions. For comparing two arrays, let's say, which look similar to us humans, in JavaScript they are not equal. And that's not React-specific, that is JavaScript. And attached to this lecture, you find an article and a video on primitive and reference values so that you really understand this because that's a core concept of JavaScript. Now, it's important to understand that functions are just objects in JavaScript. Again, not React-specific, that's just JavaScript.
+So here a new function object is created with every time the App function runs, and this function object is passed to the onClick prop. Now, therefore, Button in the end compares props.onClick to props.previous.onClick, for example. And in there we have two function objects.  Now, two objects, even if they have the same content, are never equal in JavaScript when compared like this.  And, therefore, React.memo finds out that the value changed just because of how JavaScript works. We can make React Memo work for prop values that are objects as well. We just need to tweak the way we create and store those objects a little bit. There is an extra hook provided by React
+that helps us with that.  And that is the Use Callback Hook.
+
+
  
