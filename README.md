@@ -295,6 +295,16 @@ useEffect is great if we have code that should be executed as part of the compon
 So we learned how to send a get request, fetch request to the URL. But in the lots of application we don’t want to fetch a data. We also want to send data to the server, for example because a user was created. So for it, we need an API to send post requests there.
 So for this purpose we can use Firebase which is a service provided by google. It is a backend which we can use without writing any code. It is not some kind of database but it also gives us a full backend app, a complete rest API, to which we can send requests. We can create a project, and one part of is database we can use it. When we click in the Realtime Database, the very simple database is set up for us. It give you a url, we can use to talk to that database. that's deceiving. Because we cannot talk to the database. The URl to some FireBase API, rest ApI, which takes incoming requests and does talk to some other database behind the scenes.
 
+**Sending a POST request:** 
+Fetch is not just for fetching data, we can use it function to send data. We can outsource some code into separate function maybe also stored in other files to keep this file lean. When we want to POST request, the fetch API can get second argument. We can use this second argument to configure outgoing request. For example we can set the method key to “POST” to send the post request. With it, the firebase service creates a resource in the database.
+Now what happens exactly when sending a POST request to some URL always depends on the backend we are using. It is not set in stone that sending a POST request will always create a resource but it always depends on the concrete API.
+We are working with Firebase that send a POST request will create a resource.
+
+We also need to add that resource which should be stored. In our project we do that with body option in the fetch API configuration object. The body ants JSON data. JSON is the data format which is typically used for exchanging data between frony-end and backend.
+Now to convert a JavaScript object to JSON, we can use a utility method which exist in JS. We can use the JSON object which is built into browser side JS (JSON.stringify) and call stringify and this basically takes a JS object or array and turns it JSON format.
+And last, We need to add some headers or to be precise, one header which we do by adding the header key and setting an object as a value, that is the content-tyoe which should be set to application JSON.
+Technically this header is not required by Firebase, it would be able to handle the request even if that header is not set. But a lot of REST APIs that we might use in future, require this extra header, which describe to content that will be sent.
+And then we can get our response data by awaiting response dot JSOn, because Firebase also sends back data in JSON format. We are not getting back in array for data but an object, where the IDs are keys and then the data are nested objects. E need to transform data to display in our format.
 
 
  
