@@ -306,5 +306,15 @@ And last, We need to add some headers or to be precise, one header which we do b
 Technically this header is not required by Firebase, it would be able to handle the request even if that header is not set. But a lot of REST APIs that we might use in future, require this extra header, which describe to content that will be sent.
 And then we can get our response data by awaiting response dot JSOn, because Firebase also sends back data in JSON format. We are not getting back in array for data but an object, where the IDs are keys and then the data are nested objects. E need to transform data to display in our format.
 
+# Building Custom Hooks:
+We worked with a lot Hooks with the build in react Hooks that React offers to us like useState, useReducer, useEffect and useContext that are special React function that start with Use.
+What are custom Hooks? Custom Hooks are just regular functions like build-in Hooks, which can contain stateful logic. We can build custom Hooks, these custom hook functions, to outsource stateful logic into reusable functions. Unlike regular functions, custom Hooks can use other React Hooks and React state. With custom hooks, you can outsource logic which we might be using in different components, into a custom Hook which we can then call all these various components.
+When we are building the custom Hook for named them, we have to start with use. That is hard rule which we have to follow. It will be a normal function in the end but the use at their beginning signals to react that it will be a custom Hook and it gives the react to guarantee that we will use that function by respecting these rules of hooks s that we will use this custom Hook function just as we use to build in hooks.
+So When we have a function starting with use, React look out for that, and we can start violating some of these rules of hooks.
+We use the custom Hook for making a function that we want use it in some place. We will call the custom hook in the other component. If we use React hooks in our custom hook and use the custom hook in another component, the react hooks will be tied to component, and when we use the custom hook in different component every component will receive its own state. We don’t share the stet, just the logic which has shared not the concrete state. 
+Like other hooks, like state that we are de-structuring return array and use it, we have to return whatever we want to return and use in other components. It can be an array, object or a number. And set a variable and put the custom hook in it.
+For making the custom hook reusable and configurable, we could use arguments , just our component receive props.
+
+
 
  
