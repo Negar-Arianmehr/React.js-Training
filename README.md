@@ -315,6 +315,12 @@ We use the custom Hook for making a function that we want use it in some place. 
 Like other hooks, like state that we are de-structuring return array and use it, we have to return whatever we want to return and use in other components. It can be an array, object or a number. And set a variable and put the custom hook in it.
 For making the custom hook reusable and configurable, we could use arguments , just our component receive props.
 
-
+# Forms and Handling user input:
+Working with value and validation and state. What is complex about forms? Forms can be complex from a developer’s point of view because forms and their inputs can assume a broad variety of different states. They can be invalid or valid. For every state that we have in the form, we have to check it is valid or invalid, not for the overall form. So if one of input is invalid we have to show error massage and highlight problematic inputs and ensure form cannot be submitted or saved. If input is valid, we have to allow and ensure form to be submitted or saved. 
+When to validate? 
+1.	We can validate the user input when the form is submitted as a whole , here we allow the users to enter a valid value before warning them. It is good to avoid unnecessary warning but maybe present feedback is too late.
+2.	we can also check the value entered by a user once an input loses focus to then check what a user did enter the error and find out if it is valid. The good thing it is that we allow the users to enter a valid value before warning them. But we already do show an error then once the user is done with that specific input. We don’t wait for overall form submission but we just wait until the user is done with one specific input. This can be useful for untouched forms. So where users haven’t entered anything yet. The downside with this approach if we only validate on losing focus is that if an input was invalid, now come back to fix ot, after users are done entering an input.
+3.	 We can also do that when every keystroke or on every change to user makes to an input. Here we provide direct feedback to the user on whether the input is valid or not on every keystroke. But as a downside, we here warn the user before they even had a chance of entering valid values. Here initially everything is invalid.
+But if apply on invalid inputs, It has the potential of providing more direct feedback.
 
  
