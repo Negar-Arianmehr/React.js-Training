@@ -330,5 +330,6 @@ Now how we can decide of which on is better, so it depends what we plan to do wi
 
 When we get an input and send it to the server, we don’t want to send an empty data to server. we want to say the client-side validation, where we validate in the browser. But it is not completed. If we have a real website, validating in the browser is great, when we get the user a direct feedback. But it is not enough. We have to validates the input on the server, because this code has to be edited by our users.
 
+# Diving into Redux
 
  
