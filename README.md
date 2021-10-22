@@ -339,7 +339,9 @@ But we can split the definition of state into three kinds of state. We have a
 3. app wide state: this state affects the entire application (most/ all components). For example, user authentication status. If we log in we might need to change the navigation bar because we now show new options and we also certainly affect a lot of other components which now show more or less data. We can manage this with the useState and useReducer and by passing state values and updating functions around full props. 
 Now for cross-component and app-wide state passing around data and updating function through props can be cumbersome though. That why we learned about react context. That makes managing cross-component or application wide sate easier. That is one way to simplify cross-component and app-wide state management.
 Redux solves the same problem. So both React context and Redux are there to help us manage such cross-component or app-wide states.
-The question here is why we have Redux when we have React Context to manage our components and data? We used the Context for avoiding prop chains or prop drilling and we can have a centeral place our context and the Context Provider component which we use for managing state. So why we need Redux?
+The question here is why we have Redux when we have React Context to manage our components and data? We used the Context for avoiding prop chains or prop drilling and we can have a centeral place our context and the Context Provider component which we use for managing state. 
+So why we need Redux?
+
 React Context has a couple of potential disadvantages, we say potential because they might not matter in the app you are building. 
 If they don’t matter, we don’t need Redux. We can use both Context and Redux in the same application. Typically for application wide-state, we will only use one of the two, but then we could be using Redux for the general application wide-state, stil use the Context for selected multi-component states which are important in parts of your application. The mixing them like it is possible.
 So Redux is basically an alternative to React Context. Redux is all about hsving one central Data store in our application. Whichever cross-component or app wide state we have, it goes into one store. We have this store and when some data change, the React will be update. For this components set up subscriptions to our Central store. They subscribe to the store and whenever the data changes the store notifies components and then components can get the data they need, so they get a slice of the Redux store, and then they can use it. The important rule is how do we change data into stored in? here components are not important, never directly manipulate the store data. We have that subscription, but we don’t have a data flow in the other direction, At least not a direct data flow. Components don’t directly manipulate that data in the store. Instead for debt, we use a concept called reducers. We have a reducer function. This function that we have to set up, is responsible for mutating, changes data. This reducer function here is not that useReducer hook we learned before. Reducer functions are functions which takes some input and then transform that input and spit out a new output a new result. So we have reducer function which is responsible for updating the store data, and we have components that subscribe to that data.
@@ -347,7 +349,9 @@ How we can connect the component and reducer function, because ultimately it wil
 For using Redux: at first we have to have node.js that we have it, for run JS outside the browser, for create react app and also for using development server.
 No we need to npm init in our folder, because after that we need to install Redux with this command npm install redux.
 **I get an error for installing it** it resolved with installing a new version of npm.
+
 Npm istall –g npm@latest
+
 For using Redux in the jS file, because we make a regular JS file and now we want to use Redux in it, so we have to import the redux in this file. But because we are going to execute this file with node.js, the import will look a bit different.
 Const redux = require(“redux”);
 That is the default nodeJS import syntax for importing a third party package ( allows developers to share code that extends the functionality of Django REST framwork).
@@ -355,42 +359,58 @@ We import redux from the Redux package with this syntax. Now we need to create a
 redux.creactStore(reducerFunction) …redux is the object and createStore that is a method exposed by react library.
 Const store = redux.createStore(reducerFunction)
 Next thing that we need is the reducer function that is a standard JS function but it will be called by Redux library. It will be always receiving two pieces of input. Two parameters, the old or existing state and the action that was dispatched. It always must to return a new state object. Therefore, a reducer function should be a pure function. Same input same output without side effect. We must not send a HTTP request or write something to local storage or fetch something from local storage there. A reducer should really just be a function that takes the given inputs, which are provided by Redux and then produces the expected output, a new state object, or any kind of value type. We have to put a initial state for state in the reducer function, because of first executing.
+
 Cinst reducerFunction = (state = initial state, action) => {…}
+
 We pass the reducer function into the store. The store now know about which reducer function is responsible for changing that store. 
 Now we ned someone who subscribes to that store and then we need an action that can be dispatched.
 For subscriber if it is a function we can reach out to store, and use getState() getState() is a method which is available on the store created with createStore(),it will give us the latest state snapshot after it was updated.
  we need to tell the subscriber function should be executed whenever our state change. we do it with calling the subscribe () method on the store >>> store.subscribe(). The subscribe method then wants a subscriber function, the function which redux will executed for us whenever the data and the store changed, store.subscribe(subscriberFunction). We will point to the functions, reducer function or subscriber function, because both execute with redux.
 Without action the subscriber function isn’t executed. So for it, we use dispatch() method, it is a method which dispatch an action, an action is a JS object with a type property. Typically, you use a string here and then this should be a unique string so that every action, every distinct action, which you dispatch leads to different things being done in the reducer.
 Redux it indeed isn't a library restricted to React, we can use redux in any JS project.
+
 **React-redux:**
+
 To making working with Redux applications easier, there is a second package which we should install the 
 react-redux 
 package. This is a package which makes connecting react applications to redux stores and reducers ends on very simple. With it when we want to use redux in react project we write:
 Import { createStore } from “redux”;
 And for using this file outside we need to export store. Now for using it in our React project we nedd to provide it. What does provide mean here? To provide our Redux store to the React app, we go into index.js file where we rendered the entire app, to the highest level we can go in our react application, to the top of component tree, where we render the root component. Here we must import:
+
 Import { Provider } from “react-redux”;
+
 Provider is a component. And wrap the <App /> with provider. BUT we don’t have to use Provider on this highest component level, we could also wrap nested components with provider. So that component and child component and child o child can access to Provider. We also have to import store in this component and in the Provider tag we have a store prop which have to set with a value that is our Redux store:
+
 <Provider store={store}>….
+  
 Now we go to the component that we want to use the data in store, so we import the useSelector from react-redux. useSelector is a custom hook made by the react Redux team. There also is useStore hook which we could use as well that gives us direct access to the store. But useSelector is a bit more convenient to use because that allows us to automatically select a part of our state managed by the store.
+  
 Now if we would be using a class-based component and not a functional component as we are here and as we are in the majority of the course, then there also is a connect function which we could use instead. This function can be used as a wrapper around our class component to connect that class component to the store.
 When we pass the function for getting the special data, the great thing is that when we use useSelector react redux will automatically set up a subscripton to the redux store for this component. So our component will be updated and will receive the latest state automatically whenever that data changes in the Redux store.
 Now for dispatch actions, we use the useDispatch hook that give back a dispatch function which we can execute and dispatch an action against our Redux store.
 But for class-base components how do we get access to Redux here?
 In the functional component we used hooks. Use dispatch and use selector, but hooks are not usable in class-based components. Now, I briefly did mention it before, react Redux also exports a connect function, which is a function that helps you connect class-based components to Redux. Actually, you could also use it on functional components, but for functional components, using these hooks is simply more convenient. But no matter if it's a functional or a class-based component, you can use connect. And therefore we will use connect here on this class-based component. How do we use it? When we export our counter, we don't export the counter component like this. Instead we call connect and now connect when executed, will actually return a new function as a value, which we then execute again. And then we pass our component to that returned function as our argument. So this can look strange, but connect is a so-called higher order component. We execute the connect function. It then returns a new function, and we execute this returned, this new function as well.  And to this returned function, we pass counter. Now, why do we do it like this? Because to connect, when we execute this, we also pass something. Connect also wants some arguments. Connect also wants some arguments. It wants two arguments to be precise, and both arguments are functions. I'll write them separately here. The first function is a function that maps Redux state to props, which will be received in this component then. Hence we call this function map state to props. That's not a name you must use, but a convention which you will see in a lot of projects. Now, this is a function which receives the Redux state, and then this returns an object where the keys will be available as props in the receiving component. So in the counter component, and the values of those keys, that is then the logic for drilling into that Redux state. So here we could expose a counter prop by using counter as a key here, this key named therefore is up to you. And the value is state.counter. So we then pick the counter value from the Redux state, and bind that value to the counter prop.
 About the object that we return into our reducer in Redux that we always return a brand new snapshot, a brand new state object that Redux will use to replace its existing state with. The important point here is that the objects which we return in the reducer will not be merged with the existing state. They will overwrite the existing state. So if we forget to put a some of property in the object we get undefined and it doesn’t work normal. We must always set all the other states when we update a piece of state, because we overwrite the old state.
+  
 It is super important when working with redux, WE SHOULD NEVER MUTATE THE STATE, THE EXISTING STATE, WE SHOULD NEVER CHANGE THE EXISTING STATE. It makes a bug in your code, if you change the existing object.
 **Redux Challenging & Introducing Redux Toolkit:** 
 let's identify a couple of potential problems we could be facing here if our application would continue to grow. So if we manage more and more state with Redux one potentioal issue can be our action types. 
 Another potential problem we could be facing is the state immutability which we have to respect. We have to ensure that we always return a brand new state snapshot and that we don’t accidentally change the existing state anywhere. If we have more complex data with nested objects and arrays it is easy to mess this up and accidentally change some nested data even though you didn’t want to. 
 For all these problem there are solutions, we could implement on our own. For ensuring that we have unique identifiers and we don’t miss type we could create constants. There are also solutions for splitting your reducer into multiple smaller reducer functions. There are also third-party packages which allow you to automatically copy state and ensure that we don’t accidentally edit it. But we don’t need to dive into those various solutions anymore, instead there is another library called Redux Toolkit. Redux toolkit is developed by Redux team, and as an extra pakage which makes working with Redux more convenient and easier. For install redux toolkit:
+  
 Npm install @reduxjs/toolkit
+  
 When we install it we can unstill redux because redux is in reduxToolkit. We will use it in the store folder. It will simplifies a couple of aspects of working with redux.
 We import:
+  
 Import { createSlice } from “@reduxjs/toolkit;
+  
 There is createReducer in @reduxjs/toolkit but createSlice is more powerful thane createReducer. with createSlice is we are preparing a slice of our global state. we we have different pieces of state  which are not directly related, we could make different slice in s eparate files. every slice needs a name. 
 With createSlice and in the method that we have, we can change the form of state, because redux toolkit with another package called imgur change our state and make a clone of existing state with ours.
 After making the CreateSlice object we need to use the return value of callimg createSlice, we pass it into store in this way, with reducer:
+  
 creatStore(creatSliceName.reducer)
+  
 when reducer is big with some if statements, togger to different reducer method. When we have small state slices we can do it. But for big app it doesn’t a good idea. So for multiple reducer >>> for redux we have combineReducers, but for reduxjs/toolkit we can import configureStore. ConfigureStore like createStore creates a store but it makes merging multiple reducers into one reducer easier thereafter. So here we can now call configureStore, and to configureStore, we now pass an object not a reducer function but an object. It is a configuration object expected by configureStore. A configuration object where we then set a reducer property, reducer singular and not reducers plural, because still no matter if we use createStore or configureStore, redux wants one main reducer function which is responsible for the global state. If we have multiple state slices in big app, then alternatively as a valu for ths reducer key, we could also set an object and in the object, we can set up keys of our choice. In the behind the since they will be merged into one big reducer.
 Now how we can dispatch actions? We have to export actions besides the exporting store.
  
