@@ -429,5 +429,50 @@ But when we work with Firebase, it doesn’t do a lot of work, it just stores in
 For sending request to firebase to store data we send the POST request, but here we want to send a PUT request. If we send a PUT request we also do store data on firebase but the difference to POST is that the new data will not be added in a list of data, it will overwrite existing data with incoming data. We face one problem when using useEffect the way we currently do it: It will execute when our app starts. Why is this an issue? It's a problem because this will send the initial (i.e. empty) cart to our backend and overwrite any data stored there.
   
   **Exploring the Redux Dev-tools:** besides handling async tasks and side effects with Redux and understanding where to put our code there was another important topic, that is Redux Devtools. There are extra tools which we can use which make debugging Redux and our Redux state a bit easier in the complex app. We need to search redux devtools and in the github we can find it and install it for chrom that is easy to use. When we are using Redux  without Redux toolkit, we have to set up some extra code to make Redux Devtools work. But with Redux toolkit it will conveniently work out of the box
+  
+# Building a multi-page SPA with React Router
+All the projects till now have one thing in common, they all basically take place on one single page. The URL always stays the same. It makes sense because we learned that with React we typically build a single page app. But in the most web we need multiple pages, so for it, we are going to dive into a concept called routing. With that we are learning how we can add multiple pages or the illusion of having multiple pages with different URL’s to the same single page app.
+ We will learn what is client-side “Routing”?  and advanced features: dynamic and nested routes.
+When we want the website where you have different paths and those different paths in the URL load different pages, so that when the URL changes, we change the visible content of the page. We load different pages for different paths after our domain and it’s then the combination of all those pages with their own paths that makes up the overall website.
+If we don’t work with React, when we have a traditional multi-page app, we have some server which sends back different HTML files, we have to store different HTML files on the server, for requests to different URLs, different HTML pages are sent back to the client and these pages can then be rendered by the browser. When we don’t have a single page app, and that mean whenever we change the URL, we leave our running client side app. we lose all the state there we have to wait to request response cycle and we have to let the browser render this new page.
+But now with react, we don’t have this traditional flow. Instead we want load a client side app, so a JS web app, which runs in the browser and we want to utilize this app to change what is visible on the screen with JS. we can provide this very instant reactive user experience which we can do with JS in the browser. Fetching different HTML pages doesn’t work here.
+We still want to build a single page app step. We can continue building a single page app and we therefore only have one HTML page which is initially loaded when user first visits our website thereafter we have JS to take over. But a good thing is that we can also take a look at the URL and manipulate the URL and that path after our domain with JS. We can deal with some React code which controls the URL and which changes or when a link is clicked without sending request to server and fetching a new HTML file.
+For that we use a third-party package called React Router. It is a package which we have to install separately, it is not built into React, but it is a package which then gives us client-side routing, so that watching and manipulation of the URL and that component rendering based on the URL.
+For installing react-router we can search it and find it in the github and or in the reactrourter.com. but we can install it with npm with:
+ npm install react-router-dom
+now we wat to use Router to handle different paths on our page and load different components for the different paths. We want to handle these paths after domain to render different component (our-dimain.com/name)
+we import { Route } from “react-router-dom” that route is a component. It is a component that allows us to define a certain path and then the React component that should be rendered when that path becomes active in the URL.
+We add this component like other components wherever we import it. 
+<Route  path=”/nameOfComponent” />   but it has a special prop (property)
+With this path we say this route should become active if we have our –domain/nameOfComponent. And we also have to tell react router what active should be loaded onto the screen. For it, we put the component between the opening and closing Route tag, and tell it this component should be rendered here. The interesting thing is that this route component is only displayed on the screen if our URL path is /welcome.
+But to make those Route components and other React Router features work, we need to do something else in addition. We also must to import BrowserRouter component from react-router-dom, and we need to wrap the overall App with this component. With it we active the react Router and unlock React router features like defining routes.
+If we put the name of the page in anchor tag hyperlink with the /nameOfComponent href, we will see the page reload with every click. So we do send a brand new request to the server. So for preventing to it happens we import other component from react-router-do that is link
+Import { Link } from “react-router-dom”
+It allows to create a link. We replace anchor tag with Link and href with to
+<Link to=”path”>name of component</Link>
+With this, react router change the screen with new data when we chick without load the new page, and it also change the URL.
+We can use the NavLink component to replace the standard link and NavLink works basically like the standard link. It still creates an anchor tag, but it also set a css class on the active anchor item. We need to tell NavLink the active also name prop. The active class that is we wrote.
+<Navlink activeClassName={the class we made} to=”…”>…
+It handles if one of page is active this special active page adds. We have to add a.nameOfActive in the css.
+Dynamic routes:
+Sometimes we have a different content with one name, for example, different detail for every product. In this situation we can define dynamic routes.
+<Route path=”/name/:nameid” >
+: is the dynamic segments, and takes any value. And in the component between the Route we will get access to the concrete value. In the component we have to define id. We can make a request to the backend to the API to fetch the full data. But thankfully, straightforward we can import from React Router Dom a special hook a custom hook not created by us but by the React Router team. We can use the useParams hook. When we call useOarams, it will return a params object will have key value pairs that the keys are the dynamic segments leading to that page.
+Your URL path basically work like a folder structure then new subfolders add new segments. 
+Now how we can structure our URLs.
+If we have a name for one page and other pages are relative to this page we name the path like:
+patch=”name/:name1”
+So the name is one of path we have for a page and second one is subpage, but if we do it we can see the content of subpage will be loaded in below of the name, and the page doesn’t change. It happens because it is how react route works. Name is before all of the subpages path so all routs that match the current path will be loaded. If we want to show more details below of the link so it is the way to make it. But sometimes I want to have one active route at the same time.
+Here we have another component offered by react router dom, the switch component. The switch component can wrap another component. It wraps around all route and then only one of these routes will be active at the same time. React Router goes through your Routes top to bottom and when it finds a match, it matches the start of a path not entire patch, it will then stop because of Switch.
+But here we also have same name as start , name, name/p1, name/p2 … here for making the id work, we have to add another prop in the Route. The exact prop, this tells React router that this should only load to a match if we have an exact match, so switches from matching the beginning of the path to matching the full path.
+<Route patch=”/products” exact >
+<Route patch=”/products/:productId” >
+Nested roure: we can define route in other Routes therefore, and then load more content. Just we have to be carful that befor the name of path we have to point to name of the parents route
+<Route patch=”/welcome/p1”>
+Another component is redirect that allows us to redirect the user. It is work when the user goes to /nothing, so we want to return it to a page. Here we use the Redirect component. 
+<Route path=”/”  exact>
+     <Redirect to=”/nameOf Page”/>
+</Route>
+
 
 
