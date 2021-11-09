@@ -498,6 +498,47 @@ React-Router has a special component which we can use, so from react router Dom,
   are special parameters which you find on some URLs at the end of the URLs. On some URLs, you have a question mark, and then thereafter you have parameter pairs which basically pass extra data into the page that was loaded. The difference compared to regular route parameters is the regular parameters are mandatory, then we have for example ID it will be loaded. Whereas query parameters are optional. The question mark there does not change the route matching. The data are stored ascending or descending order by ID. We want to set and use query parameters to save the current sorting. We do sort them accordingly if someone uses this URL, and if we use this URL without the query parameters, we get the default sorting.
 /for sort the quotes we can use useState but here not, at first we want to update the URL >> for it we use the hook from react-router-dom, useHistory that allows us to change the URL we use push because we want to be able to back to previous page with back button after query mark we put a name as key which holds my storing info, then we set the dynamic value.
 Where useHistory gives us access to the object that allows us to change and manage the URL, useLocation that is other hook in react-router-dom, gives us access to a location object which has information about the currently loaded page or URL.
+  
+  When we work with nested Route, if we change one of path we need to change it everywhere. But we can use the fact that react Router gives us certain Hooks that allow us to find out for which URL this component was rendered. For it we can use another hook provided by react-router-dom 
+
+useRouteMatch
+
+is a hook name. it is similar to use location but it has more info about the currently loaded route, not just about the URL but about some internally managed data React Router is aware of.
+
+
+  # React-Router Version 6:
+//1)
+//using Routes instead of Switch
+//2)
+// we add a new element prop, and then pass a dynamic value to element
+//and that is to be rendered component as JSX. we have to pass a JSX element into the element.
+//3)
+//we need to add exact, because without exact, this would match if a path started with /products
+//with V6 we don’t need exact prop,
+//4)
+//order of Route doesn’t matter , when we have a same stared name. react-route v6 choose best.
+//5)
+//activeClassName prop is changed. for NavLink the className just not take a class name, instead, it takes a function
+// which we can pass and it give us some info about this link and the current state of navigation. the function
+//get some NavData, this argument is provided by React Router to this function when this function is executed, whenever nav change.
+//inside the NavData object which we get by React router, we can find a isAction property and that will be true if this link is active
+//in this way we apply the active class to link.
+//6)
+//Redirect component doesn’t exist anymore. instead it is Navigate that is a new component provided by ReactRouter 6
+//7)
+//nested page structures, we have to wrap the nested Route with Routes and also we have to tell parents Route
+//that has nested we have to add * after the main path in parent Route. and in the nested route we just put the path without parent path.
+//it is same for Link, if we have Link it is relative also.
+//8)
+//we can have nested Routes, in the child component we have to use Outlet component from react-router-dom
+//to tell router where have to put the nested route this simply is a placeholder telling React Router where nested content, nested route content
+//should be inserted.
+//9)
+//With version 6, useHistory doesn't exist anymore. Instead now, we have a useNavigate hook
+//This gives us a navigate object and function if we execute useNavigate, and this navigate function can be executed to navigate somewhere else. For example, if we would want to programmatically navigate to /welcome, this is how we could do it.
+//10)
+//I want to talk about the prompt component, which is provided by React Router version 5. You could use this component to prevent accidentally leaving a page if you have unsaved changes, for example. In React Router version 6, at least at this point of time
+// when React Router version 6 was released, this component does not exist. So if you want to prevent navigationin case of unsaved changes, you have to implement your own workaround for the moment.
 
 
 
