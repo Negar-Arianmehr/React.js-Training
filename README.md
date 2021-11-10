@@ -541,5 +541,29 @@ is a hook name. it is similar to use location but it has more info about the cur
 // when React Router version 6 was released, this component does not exist. So if you want to prevent navigationin case of unsaved changes, you have to implement your own workaround for the moment.
 
 
+# Deploying React Apps:
+How do you deploy our React application?
+How do you push it into a real server?
+There are a couple of steps involved, which you can go through whenever you deploy or redeploy your app.
+We started with writing the code, and then we have to test code before deploy it.
+Next step, we might want to explore optimization opportunities. There are certain things in our code which we can optimize. We want to look into a concept called lazy loading. So optimize code is important part before we move our code somewhere.
+After it is optimized and working, it is time to build our app for production, a script which will then output a production ready bundle of our code which is minified and automatically optimized to be as small as possible. We get an output to move onto a server. Shipping less code will load the app faster, such a optimized minified code bundle with a certain script.
+Once we got this optimized code package which is ready for deployment, we need to deploy that package. 
+Next step is to take the code that produced for us, and uploaded to server. There will have different choices, hosting providers which we can use. We will definitely need to configure our server or our hosting provider’s offering.
+We wrote the code and test it, and the app is ready. Now optimize code step, performance improvements, like React memo that is used to prevent of re-render cycles in codes.
+Here for performance improvement, we want to talk about Lazy Loading that means that we load certain chunks of our code, certain parts of code only when that code is needed. Because it is important that we know with React Single Page Application we in the end build one big JS code bundle, and this entire bundle needs to be downloaded by every visitor of your web in order to use that site. So the user has to be waited until all the code and app downloaded and user can see it.
+We want to ensure the initial code bundle which is downloaded is as small as possible and certain parts of our code if user visit this part of page. The code that is relative of this code just downloaded, that is what lazy loading is about. We want to split our code into multiple chunks or bundles which are each only downloaded when they are needed.
+Lazy Loading is easy to implement if we are using Routing, because we can split our code by Route. Even though those different pages are only visited when the URL matches the POS to find, all that code is downloaded in advance,
+So for it we have to import React from react, and we want to tell it whenever this page load, please import info about it. We use React.lazy() build-in method that will help us with code splitting. We import as a function and define the path of the component for that page:
+Const newpage = React.lazy(() => import(“./nameofpathorForlder/nameComponent”))
+React lazy will be executed by react when it is needed. It will not executed in advance only when it is needed. 
+Here we have to do something else, because React is not able to continue, we cannot load component till the download completed. So we need to define a fallback UI. So we need to use another component from React that is Suspense. We need the wrap code around this component wherever we use React lazy, and in this component we need to use fallback prop. Fallback wants some JSX code as a value which is shown as a fallback.
+Now we optimized our code, maybe with React Memo, with lazy loading. Now we want to build our app for production. For production, we want to run the build command from package.json
+
+ Npm run build
+
+After that we can see the build folder. This folder is the folder that we need to move onto our server.
+Next step, we want to upload it to some hosting provider, real server that visitors from all over the word get access to it. 
+The React Single Page App or other framework, is a static website, it means that it is only made up of HTML, CSS and browser site JavaScript code. There is no server side code involved. The JS code is not server side JS code, it is not node JS code, it is client side, browser side JS code. Therefore, this is code which executes in the browser. There is not code that needed to be executed on a server, no node.js, no PHP code. If we have our own backend or API instead of Firebase, it was different. When there is no server side code involved, and we want to deploy it, such a React Single Page App, we need a static side host, we need a hosting provider an offering for hosting astatic website. We don’t need hosting provider that allows us to run server side code like nodejs or PHP.
 
 
