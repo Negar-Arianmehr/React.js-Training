@@ -565,5 +565,18 @@ Now we optimized our code, maybe with React Memo, with lazy loading. Now we want
 After that we can see the build folder. This folder is the folder that we need to move onto our server.
 Next step, we want to upload it to some hosting provider, real server that visitors from all over the word get access to it. 
 The React Single Page App or other framework, is a static website, it means that it is only made up of HTML, CSS and browser site JavaScript code. There is no server side code involved. The JS code is not server side JS code, it is not node JS code, it is client side, browser side JS code. Therefore, this is code which executes in the browser. There is not code that needed to be executed on a server, no node.js, no PHP code. If we have our own backend or API instead of Firebase, it was different. When there is no server side code involved, and we want to deploy it, such a React Single Page App, we need a static side host, we need a hosting provider an offering for hosting astatic website. We don’t need hosting provider that allows us to run server side code like nodejs or PHP.
+  
+  There is difference between server-side routing and client-side routing. When we use Routing, we use React Router to define routes and load different components based on the URL. But there is one super important thing to understand, all that code executes in the browser. React Router is a browser-side package. It is even called react-router-dom. So it is run in the browser.
+It has a look at the URL and changes what we see on the screen after our React app was loaded by the browser. Why does this matter?
+If I enter a URL, and I hit enter, then see the appropriate page on the screen, then that is the result of React Router having a look at the URL after the React app was loaded, and then bringing the correct component onto the screen. But it doesn’t all happen in one step. Instead we have a server and a client. 
+The server is a remote machine which hosts our production-ready React code, the app that we deploy, that will live on some server, not our local machine and not on the machine of our users.
+When the user enters our domain, this user sends a request to the server, a request for this website. This request contains the full URL that was entered. 
+The request then hits the server. The server sends back a response which contains all the CSS and HTML code, but also our React code. This React code contains the React Router code, which will have a look at the path, so the part of the URL after the domain, and it will then evaluate that and bring the correct component onto the screen.
+The request which reaches the server contains this path. It contains full URL, and by default a server would look for different files which it would return as a response for different URLs. It is how servers typically work. Different URLs trigger different actions, and will load to different responses. 
+Now with React Lazy we don’t want that. When hosting a Single Page App, we want to ignore the path so the part after the domain on the server, and always return the same response, the sane HTML file and the same JA files, no matter which path the user targeted. We want our react App to will start up, and then react Router which is part of that app, takes another look at that URL and then render the correct content on the screen.
+So the server has to ignore some part of path, but by default it doesn’t do that.
+For Firebase that we use it ask for configuration as a Single Page app, we say yes, and set it into the server to ignore the URL.
+This is configuration step, configure the server step. 
+
 
 
