@@ -578,5 +578,11 @@ So the server has to ignore some part of path, but by default it doesn’t do th
 For Firebase that we use it ask for configuration as a Single Page app, we say yes, and set it into the server to ignore the URL.
 This is configuration step, configure the server step. 
 
+  
+  Starting set up and first step:
+We use firebase as a dummy backend.
+Search in google: firebase Auth REST API, it is the API we work with it as a dummy backend.
+When we go to a project in the firebase and in the authentication, we can see there are some way to sign in. if we want to add sign in with Google or Facebook to our app, we can look up the dedicated docs for that, or simply google for React Facebook authentication to find dedicated instructions for that.
+
 
 
