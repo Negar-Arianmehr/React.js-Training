@@ -584,5 +584,21 @@ We use firebase as a dummy backend.
 Search in google: firebase Auth REST API, it is the API we work with it as a dummy backend.
 When we go to a project in the firebase and in the authentication, we can see there are some way to sign in. if we want to add sign in with Google or Facebook to our app, we can look up the dedicated docs for that, or simply google for React Facebook authentication to find dedicated instructions for that.
 
+  
+  For changing password, we need IdToken, it shows which user wants to change the password. you might need to add it in the headers, maybe with the authorization header which is something like Bearer, and then your token. That is also something you'll often see for a certain APIs. So that depends on the API you're using. If you are building your own API, you can of course decide where you expect that token. If you are working with some third party API as we're doing it here, you'll have to check the API docs to find out how the token should be added.
+
+For log out, the server doesn’t care about log out, so the only thing that we have to do is to change our state. We just have to make sure that in this context, API, we clear token. We set it back to an empty string or to null.
+
+**Protecting Front-End**
+The problem that we have in this point is we can already manually enter/profile in the URL and load this page, but it is not possible to work with that page like changing password, because it doesn’t have the token. But we don’t want some page visit without login or sign up. For it we have solution call navigation guards. With this method, we can choose not to render this page (path of it is in the Route tag) or this Route configuration at all if the user is not authenticated. We use the context and isLogin in the component that there are our Routes.
+For 404 page, invalid path, we use path=”*” and Navigation V6 and Redirect V5
+At the moment, whenever I reload or manually enter a URL we lose our authentication status. that means that all our state in the context is lost. We get back to the initial state basically. And that's why we lose this data whenever we reload.
+we need to store them other palce. thankfully browsers do have storage mechanisms, is local storage. Now, if we talk about local storage, where there is these cookies and so on. it will only be a problem if your page is vulnerable to Cross-site Scripting attacks.
+notice: localStorage is only able to store basic primitive data like string or numbers
+//if you want to store an object you have to convert data to JSON first that is string.
+LocalStage is a synchronous API.
+Adding auto logout: we want to add expiration time. For it we have to calculate the time from the user login till expiration time. So we use the function for it.
+We can get current time with new Date(), this give us the current timestamp. With getTime() gives us that current timestamp in milliseconds.
+
 
 
