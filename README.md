@@ -599,6 +599,14 @@ notice: localStorage is only able to store basic primitive data like string or n
 LocalStage is a synchronous API.
 Adding auto logout: we want to add expiration time. For it we have to calculate the time from the user login till expiration time. So we use the function for it.
 We can get current time with new Date(), this give us the current timestamp. With getTime() gives us that current timestamp in milliseconds.
+  
+# NextJS
+We want to learn Next.js that is a framework for React. When we go to NextJS.org we can see written the react Framework for production. NextJs offers a lot of features that make building large scale production ready, react apps easier. Maximilion believes that NextJs is a full stack framework for ReactJS. React is a JS library that means that is a third party package which you can add to your front end projects. We can use React there to build interactive user interfaces. And it is a library that makes building complex user interfaces way easier than it would be with just JS. Iy is called a library because I its core, it is really only focusing on that user interface part, on component, state props. For building a large app, we need add some extra libraries to React like Router.
+Now NextJS is labelled a framework and a framework that builds upon React. 
+The difference between a framework and a library in the end is that a framework is bigger, it has more features than a library. It is focusing on more things instead of just a single thing, and it is also giving you clear rules, a clear guidance on how we should write our code, how we should structure our files and so on.
+NextJs is a framework building-up on another library, react, because it inhances React, it makes building large scale React apps easier, that is the part that back to the production part of definition of NextJS, and it also solves common problems. We don’t need to add as many third party libraries to solve common problems for bigger apps. 
+That is the resean that NextJS called a framework, lots of built-in features that help you solve common problems and clear guidance on how to use those features. React, because we still write React code, we still build react components and use React features (props, state, context, …). NextJS just enhances our React apps and adds more features. For production, there are certain problems which we will need to solve for almost all production-ready React apps, NextJS solves those for use.
+
 
 
 
