@@ -606,6 +606,23 @@ Now NextJS is labelled a framework and a framework that builds upon React.
 The difference between a framework and a library in the end is that a framework is bigger, it has more features than a library. It is focusing on more things instead of just a single thing, and it is also giving you clear rules, a clear guidance on how we should write our code, how we should structure our files and so on.
 NextJs is a framework building-up on another library, react, because it inhances React, it makes building large scale React apps easier, that is the part that back to the production part of definition of NextJS, and it also solves common problems. We don’t need to add as many third party libraries to solve common problems for bigger apps. 
 That is the resean that NextJS called a framework, lots of built-in features that help you solve common problems and clear guidance on how to use those features. React, because we still write React code, we still build react components and use React features (props, state, context, …). NextJS just enhances our React apps and adds more features. For production, there are certain problems which we will need to solve for almost all production-ready React apps, NextJS solves those for use.
+  
+  
+# Testing React apps
+We did a lot of testing to app works correctly in the browser, but testing the app manually is also error-prone, at least if it’s the only kind of testing we do.
+Error-prone: it’s hard to test all possible combinations and scenarios. For big app we cannot run whole of the app for every feature that we add to app. So the automated testing steps in, it is not a replacement for manual testing. Manual testing is always important but it is an addition. With automated testing we write extra code that runs and tests our other code. We can always test everything no matter what we changed, because we will automatically then test our entire application. It doesn’t take a lot of time. Very technical but always you to test all building blocks at once.
+It allows us to test everything all the time and combine with manual testing that allows us to catch errors way earlier and it allows us to write and ship better code in app.
+**different kinds of Automated tests**:
+1.	Unit Tests 
+2.	Integration Tests
+3.	End-to-End (e2e) Tests
+Unit Tests are all about writing tests for the smallest possible units off your app. So for functions, individual functions that we use in our app or for react testing some components independently from other components in our app. Unit tests is test the individual building blocks like function or components, in isolation. Therefore, our projects contain a lot of unit tests, dozens or hundreds of unit tests. The most common important kind of test.
+Integration Tests, we test the combination of multiple building blocks, for example multiple components working together. Projects contain a couple of integration tests. It is not easy to differentiate between unit and integration tests when testing React. Also important, but focus on unit tests in most cases.
+End-to-End tests: there are all about testing entire workflows in our app. Tests complete scenarios in our app as the user would experience them. Projects typically contain only a few e2e tests. The unit and integration tests are easier to test. They often are quicker to run and they are more focused and it is way easier to test all possible scenarios, if we test all our units for different scenarios then coming up with all possible scenarios. if we look at our app as a whole which is we do with end-to-end tests. Important but can also done manually.
+We want to test success and error cases that could occur if a user interacts with our application, want to test some rare (but possible) results.
+For testing, we ned some extra tools and an extra setup, specially we need a tool for running our testing code and for asserting the results, as a success or if a rest failed with a given result and then in our React app we also and components for those automated tests to then interact with them.
+For the first part for running our testing code and asserting, we typically use Jest. Jest is not a tool focused on just React, it is a general JavaScript testing tool
+ We said that we need a tool for simulating or rendering our React app/components, for it we use the React testing library these days. Both tools are already set up for us when using create-react-app.
 
 
 
