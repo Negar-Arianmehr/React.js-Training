@@ -1,7 +1,6 @@
 # React.js-Training
-I am learning React.JS
 # React.js-project
-I am learning React with this app.. This is part of a course of https://www.udemy.com/course/react-the-complete-guide-incl-redux/learn/lecture
+I was learning React with https://www.udemy.com/course/react-the-complete-guide-incl-redux/learn/lecture
 
 Reacrjs is a JS library for building user interfaces.
 If you consider the Netflix You can see it is easy to work with it, with good user interface, the transition happens pretty much instantly, we dont seem to wait for a new page to load. When we work with some website like Netflix, it might almost feel a bit like a mobile app, even though I am using the website. From bobile apps where use that we have smooth transition that is fun to use that app and things happen instantly. Then traditionally in website, when we, for example, clicked a link or a button, our request was sent to a server and new HTML page was sent back to the browser where then could be displayed. So maybe it has the latency where we wait to open a new page.
