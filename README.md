@@ -94,6 +94,7 @@ Conditional content is about rendering different output under different conditio
 
 # Styling React Components
 Building web app with React is not just about composing components together and making sure that the logic works correctly. That arguably is the most important part, where at least it is the biggestt reason for using React. But building React app is also about styling those apps. React is also about:
+
 1.Conditional & Dynamic Styles
 2.Styled Components
 3.CSS Modules
@@ -151,6 +152,7 @@ We could also write this code and it would work in the same way.
 useEffect(() => {
   // code that only uses someProperty ...
 }, [someObject.someProperty]);
+
 This works just fine as well!
 
 But you should avoid this code:
